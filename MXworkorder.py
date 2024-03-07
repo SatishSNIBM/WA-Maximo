@@ -16,18 +16,5 @@ def main(params):
     query = 'SELECT * FROM "Maximo"."WORKORDER"'
     bus_df = pd.read_sql_query(query, con=db2_connection)
 
-    bus_route = params['bus_route']
-    bus_stop = params['bus_stop'].lower()
-    response = {}
-
-    query_df = bus_df[(bus_df.BUS_ROUTE == bus_route) & (bus_df.BUS_STOP == bus_stop)]
-
-    if query_df.shape[0] <= 0:
-        response = {"Error" : "There are no records available with this data"}
-    else:
-        bus_route = query_df.BUS_ROUTE.item()
-        bus_stop = query_df.BUS_STOP.item()
-        bus_time = query_df.SCHEDULED_ARRIVAL_TIME.item()
-        return_string = "Bus " + str(bus_route) + " is scheduled to arrive at " + bus_stop + " at " + str(bus_time)
-        response = {"bus_message": return_string}
+    response = {"result": "Success"}
     return response
